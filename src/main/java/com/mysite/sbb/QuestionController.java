@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 public class QuestionController {
     @GetMapping("/question/list")
-    @ResponseBody
     public String list(){
-        return "question list";
+        return "question_list";
     }
 }
