@@ -26,5 +26,4 @@ public class QuestionController {
     public String root(){
         return "redirect:/question/list";
     }
-
 }
