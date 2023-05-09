@@ -20,6 +20,7 @@ public class QuestionController {
         List<Question> questionList = questionService.getList();
         model.addAttribute("questionList", questionList);
         return "question_list";
+
     }
 
     @GetMapping("/")
