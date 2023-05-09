@@ -1,7 +1,6 @@
 package com.mysite.sbb;
 
 import com.mysite.sbb.entity.Question;
-import com.mysite.sbb.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,11 @@ import java.util.List;
 
 public class QuestionController {
 
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @GetMapping("/question/list")
     public String list(Model model){
-        List<Question> questionList = questionRepository.findAll();
+        List<Question> questionList = questionService.getList();
         model.addAttribute("questionList", questionList);
         return "question_list";
     }
