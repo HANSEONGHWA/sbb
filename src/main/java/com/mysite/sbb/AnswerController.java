@@ -5,10 +5,7 @@ import com.mysite.sbb.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,6 +27,5 @@ public class AnswerController {
         Question question = this.questionService.getQuestion(id);
         this.answerService.create(question, content);
         return String.format("redirect:/question/detail/%s", id);
-
     }
 }
