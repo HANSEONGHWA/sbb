@@ -3,6 +3,7 @@ package com.mysite.sbb;
 import com.mysite.sbb.entity.Question;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,35 +19,35 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("/list")
-    public String list(Model model){
-        List<Question> questionList = questionService.getList();
-        model.addAttribute("questionList", questionList);
+    public String list(Model model, @RequestParam(value="page", defaultValue = "0")int page) {
+        Page<Question> paging = questionService.getList(page);
+        model.addAttribute("paging", paging);
         return "question_list";
     }
 
     @GetMapping("/")
-    public String root(){
+    public String root() {
         return "redirect:/question/list";
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "question_detail";
     }
 
     @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm){
+    public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
 
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "question_form";
         }
-        this.questionService.create(questionForm.getSubject(),questionForm.getContent());
+        this.questionService.create(questionForm.getSubject(), questionForm.getContent());
         return "redirect:/question/list";
     }
 }
