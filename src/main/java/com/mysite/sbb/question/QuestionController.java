@@ -1,5 +1,6 @@
-package com.mysite.sbb;
+package com.mysite.sbb.question;
 
+import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.entity.Question;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

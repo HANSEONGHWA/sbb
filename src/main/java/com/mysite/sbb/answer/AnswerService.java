@@ -1,4 +1,4 @@
-package com.mysite.sbb;
+package com.mysite.sbb.answer;
 
 import com.mysite.sbb.entity.Answer;
 import com.mysite.sbb.entity.Question;

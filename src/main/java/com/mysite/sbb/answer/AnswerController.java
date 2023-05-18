@@ -1,6 +1,6 @@
-package com.mysite.sbb;
+package com.mysite.sbb.answer;
 
-import com.mysite.sbb.entity.Answer;
+import com.mysite.sbb.question.QuestionService;
 import com.mysite.sbb.entity.Question;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,8 @@ public class AnswerController {
 
     /**
      * 답변 등록
-     * @param model
-     * @param id
-     * @param answerForm
-     * @param bindingResult
-     * @return
      */
-    @PostMapping("/create/{id}")
+    @PostMapping ("/create/{id}")
     public String createAnswer
             (Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm, BindingResult bindingResult) {
         Question question = this.questionService.getQuestion(id);
