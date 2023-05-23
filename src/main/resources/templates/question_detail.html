@@ -1,4 +1,4 @@
-<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" >
+<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-3">
     <!--질문-->
     <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
@@ -35,8 +35,10 @@
 <!--           <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>-->
 <!--       </div>-->
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-
-        <textarea th:field="*{content}" rows="10" class="form-control"></textarea>
+<!--disabled  로그인 상태가 아닐 경우 입력할 수 없음. -->
+<!--현재 로그인 상태 체크 >> 현재 로그아웃 상태 : sec:authorize="isAnonymous()", 로그인상태 : sec:authorize="isAuthenticated()" -->
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" rows="10" class="form-control"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" rows="10" class="form-control"></textarea>
         <input type="submit" value="답변등록" class="btn btn-primary my-2">
     </form>
 </div>
