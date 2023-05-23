@@ -19,12 +19,13 @@ public class AnswerService {
      * 답변 등록
      */
     @PostMapping("/create/{id}")
-    public void create(Question question, String content, SiteUser author){
+    public Answer create(Question question, String content, SiteUser author){
         Answer answer = new Answer();
         answer.setContent(content);
         answer.setQuestion(question);
         answer.setCreateDate(LocalDateTime.now());
         answer.setAuthor(author);
         this.answerRepository.save(answer);
+        return answer;
     }
 }

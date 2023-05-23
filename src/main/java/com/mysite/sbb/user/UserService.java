@@ -27,11 +27,11 @@ public class UserService {
     }
 
     // siteUser 조회 메서드
-    public SiteUser getUser(String username){
+    public SiteUser getUser(String username) {
         Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
-        if (siteUser.isPresent()){
+        if (siteUser.isPresent()) {
             return siteUser.get();
-        }else{
+        } else {
             throw new DataNotFoundException("siteuser not found");
         }
     }
