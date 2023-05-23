@@ -6,6 +6,7 @@ import com.mysite.sbb.entity.Question;
 import com.mysite.sbb.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ public class AnswerController {
      * 답변 등록
      */
     @PostMapping ("/create/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String createAnswer
             (Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
         Question question = this.questionService.getQuestion(id);
