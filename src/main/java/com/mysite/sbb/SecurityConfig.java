@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -25,15 +24,17 @@ public class SecurityConfig {
                 //스프링 시큐리티에 로그인 URL등록
                 .and()
                     .formLogin()
-                    .loginPage("/user/login")
-                    .defaultSuccessUrl("/question/")
+                    .loginPage("/user/login") //로그인 페이지
+                    .defaultSuccessUrl("/question/") //로그인 성공 후
+
+
 
                 //로그아웃
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                    .logoutSuccessUrl("/question/")
-                    .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/question/") //로그아웃 성공
+                    .invalidateHttpSession(true) //http세션 초기화
         ;
         return http.build();
     }

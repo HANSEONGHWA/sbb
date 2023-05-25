@@ -62,7 +62,7 @@ public class QuestionController {
     }
 
     /**
-     * 질문 수정
+     * 질문 수정 - 수정할 제목과 내용을 questionForm 객체에 담아 템플릿으로 전달.
      */
     @GetMapping("/modify/{id}")
     @PreAuthorize("isAuthenticated()")
@@ -96,6 +96,21 @@ public class QuestionController {
         System.out.println("sssss"+questionForm);
         this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
         return String.format("redirect:/question/detail/%s", id);
+    }
+
+    /**
+     * 질문 삭제
+     */
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    //url로 전달받은 id값을 사용하여 Question 데이터를 조회한 후 로그인한 사용하와 질문의 작성자가 동일할 경우 서비스의 delete메서드로 질문 삭제.
+    public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
+        Question question = this.questionService.getQuestion(id);
+        if (!question.getAuthor().getUsername().equals(principal.getName())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        this.questionService.delete(question);
+        return "redirect:/question/";
     }
 }
 
