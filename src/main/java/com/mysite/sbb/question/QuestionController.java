@@ -84,7 +84,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
                                  Principal principal, @PathVariable("id") Integer id) {
-        System.out.println("ZNPTM:::S"+bindingResult);
+        System.out.println("ZNPTM:::S" + bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "question_form";
@@ -93,7 +93,7 @@ public class QuestionController {
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        System.out.println("sssss"+questionForm);
+        System.out.println("sssss" + questionForm);
         this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
         return String.format("redirect:/question/detail/%s", id);
     }
@@ -106,11 +106,23 @@ public class QuestionController {
     //url로 전달받은 id값을 사용하여 Question 데이터를 조회한 후 로그인한 사용하와 질문의 작성자가 동일할 경우 서비스의 delete메서드로 질문 삭제.
     public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
-        if (!question.getAuthor().getUsername().equals(principal.getName())){
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.questionService.delete(question);
         return "redirect:/question/";
+    }
+
+    /**
+     * 질문 추천
+     */
+    @GetMapping("/vote/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.questionService.vote(question, siteUser);
+        return String.format("redirect:/question/detail/%s", id);
     }
 }
 

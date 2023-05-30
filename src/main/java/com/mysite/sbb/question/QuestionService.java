@@ -35,6 +35,9 @@ public class QuestionService {
         }
     }
 
+    /**
+     * 질문 생성
+     */
     public void create(String subject, String content, SiteUser user ){
         Question question = new Question();
         question.setSubject(subject);
@@ -44,6 +47,9 @@ public class QuestionService {
         this.questionRepository.save(question);
     }
 
+    /**
+     *페이징
+     */
     public Page<Question> getList(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
@@ -51,7 +57,9 @@ public class QuestionService {
         return this.questionRepository.findAll(pageable);
     }
 
-    //질문수정
+    /**
+     * 질문 수정
+     */
     public void modify(Question question, String subject, String content) {
         question.setSubject(subject);
         question.setContent(content);
@@ -59,8 +67,18 @@ public class QuestionService {
         this.questionRepository.save(question);
     }
 
-    //질문 삭제
+    /**
+     *질문 삭제
+     */
     public void delete(Question question){
         this.questionRepository.delete(question);
+    }
+
+    /**
+     * 추천인 저장
+     */
+    public void vote(Question question, SiteUser siteUser){
+        question.getVoter().add(siteUser);
+        this.questionRepository.save(question);
     }
 }
