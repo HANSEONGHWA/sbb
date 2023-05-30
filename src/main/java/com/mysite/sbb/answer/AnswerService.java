@@ -53,4 +53,11 @@ public class AnswerService {
     }
 
 
+    /**
+     * 답변삭제
+     */
+    public void delete(Answer answer){
+        this.answerRepository.delete(answer);
+    }
+
 }
