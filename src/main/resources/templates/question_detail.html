@@ -4,7 +4,8 @@
     <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="width-space:pre-line;" th:text="${question.content}"></div>
+            <!-- 템플릿에 마크다운 적용 추가-->
+            <div class="card-text" th:utext="${@commonUtil.markdown(question.content)}"></div>
             <div class="d-flex justify-content-end">
 
                 <!--질문 수정일시 표시-->
@@ -61,7 +62,8 @@
         <!--앵커태그 추가-->
         <a th:id="|answer_${answer.id}|"></a>
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
+            <!--템플릿에 마크다운 적용-->
+            <div class="card-text"  th:utext="${@commonUtil.markdown(answer.content)}"></div>
             <div class="d-flex justify-content-end">
                 <!--답변 수정일시 표시-->
                 <div th:if="${answer.modifyDate != null}"
